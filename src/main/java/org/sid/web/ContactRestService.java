@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.sid.dao.ContactRepository;
 import org.sid.entities.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.querydsl.QPageRequest;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@CrossOrigin("*")
 public class ContactRestService {
 	
 	@Autowired
@@ -38,14 +43,13 @@ public class ContactRestService {
 	/*
 	 * @RequestMapping(value = "/chercherContacts",method = RequestMethod.GET)
 	 * public Page<Contact> chercher(
-	 * 
 	 * @RequestParam(name="mc", defaultValue = "") String mc,
-	 * 
-	 * @RequestParam(name="page", defaultValue = "0") int page,
-	 * 
-	 * @RequestParam(name="size", defaultValue = "5") int size) { return
-	 * contactRepository.chercher("%"+mc+"%", new PageRequest(page, size)); }
+	 * @RequestParam(name="page", defaultValue = "0") int page, 
+	 * @RequestParam(name="size", defaultValue = "5") int size){
+	 * return contactRepository.chercher("%"+mc+"%",Pageable(page, size,Sort.by(Sort.Direction.ASC,"id")));
+	 * }
 	 */
+	
 
 	@RequestMapping(value = "/contacts",method = RequestMethod.POST)
 	public Contact save(@RequestBody Contact c){
